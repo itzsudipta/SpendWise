@@ -65,6 +65,32 @@ INSERT INTO user_data values
 (4, 'Emily White', 'emily.white@example.com', 'pass789word', '2025-08-04 14:20:00'),
 (5, 'Michael Green', 'michael.green@example.com', 'green2025', '2025-08-05 08:50:00');
 
+INSERT INTO  category values 
+(1, 1, 'Groceries'),
+(2, 2, 'Transport'),
+(3, 1, 'Entertainment'),
+(4, 3, 'Health'),
+(5, 4, 'Bills'),
+(6, 5, 'Shopping'),
+(7, 2, 'Travel'),
+(8, 3, 'Education'),
+(9, 4, 'Utilities'),
+(10, 5, 'Dining');
+
+INSERT INTO  expense values 
+(1, 1, 1, 50.75, 'Weekly grocery shopping', '2025-08-01', '2025-08-01 10:15:00'),
+(2, 2, 2, 15.00, 'Bus fare', '2025-08-02', '2025-08-02 12:30:00'),
+(3, 1, 3, 30.00, 'Movie tickets', '2025-08-03', '2025-08-03 09:45:00'),
+(4, 3, 4, 100.00, 'Doctor visit', '2025-08-04', '2025-08-04 14:20:00'),
+(5, 4, 5, 200.00, 'Electricity bill', '2025-08-05', '2025-08-05 08:50:00'),
+(6, 5, 6, 75.50, 'New shoes', '2025-08-06', '2025-08-06 11:10:00'),
+(7, 2, 7, 300.00, 'Weekend trip', '2025-08-07', '2025-08-07 13:25:00'),
+(8, 3, 8, 120.00, 'Online course fee', '2025-08-08', '2025-08-08 15:40:00'),
+(9, 4, 9, 60.00, 'Water bill', '2025-08-09', '2025-08-09 09:55:00'),
+(10, 5, 10, 45.00, 'Dinner at restaurant', '2025-08-10', '2025-08-10 19:30:00');
+
 -- Data value fetech and acces section 
 
 select * from user_data;
+select  * from  category;
+select * from expense;
