@@ -1,0 +1,76 @@
+# ================================
+# Python & FastAPI Project Ignore
+# ================================
+
+# Virtual environment
+venv/
+env/
+.spvenv/
+spendwise/
+.spvenv/
+
+# Python cache and build files
+__pycache__/
+*.py[cod]
+*$py.class
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Logs and runtime files
+*.log
+*.pid
+*.seed
+*.cover
+*.env
+*.DS_Store
+
+# Environment / Secrets
+.env
+.env.*
+secrets.json
+config.json
+
+# IDE / Editor directories
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Byte-compiled / temp files
+*.bak
+*.swp
+*.tmp
+*~
+.cache/
+.pytest_cache/
+.mypy_cache/
+coverage/
+
+# Local database or data files
+*.db
+*.sqlite3
+instance/
+uploads/
+data/
+
+# Jupyter or notebooks
+.ipynb_checkpoints/
+
+# OS specific files
+.DS_Store
+Thumbs.db
+
+# Docker / Compose files (optional)
+docker-compose.override.yml
