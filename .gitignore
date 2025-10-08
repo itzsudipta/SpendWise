@@ -74,3 +74,7 @@ Thumbs.db
 
 # Docker / Compose files (optional)
 docker-compose.override.yml
+#Node modules (if using Node.js in the project)
+node_modules/
+npm-debug.log*
+yarn.lock           
