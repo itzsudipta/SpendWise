@@ -34,7 +34,7 @@ To set up the database for this project, follow these steps:
    - Ensure both Python (FastAPI) and Node.js (Express.js) backends are configured to connect to your PostgreSQL instance
    - Test the database connection before proceeding with development
 
-## �📊 Current Status
+## 📊 Current Status
 
 🚧 **In Development**
 
@@ -44,12 +44,12 @@ To set up the database for this project, follow these steps:
 
 ### Node.js Backend (Express.js)
 - ✅ **Node.js & Express.js Setup**: API setup with database connection successfully established
-- ⏳ **Express.js Routes**: Currently under development and implementation in progress
+- ✅ **User Routes**: user_data table routes successfully initialized and API endpoints working smoothly
+- ⏳ **Other Schema Routes**: Routes for all other database schemas currently under development
 
 ### Database (PostgreSQL)
 - ✅ **Database Schema**: Successfully initialized and ready
 - ✅ **Database Connection**: Established for Node.js backend implementations
-
-
+- ✅ **User Table Operations**: Full CRUD operations for user_data table implemented and functional
 
 **⚡ Stay tuned for further update and step-by-step updates according developments.**
