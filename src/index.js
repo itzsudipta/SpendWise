@@ -5,6 +5,7 @@ import dotenv from 'dotenv'
 import pool from "./config/db.js"
 
 import userRoutes from './routes/userRoutes.js'
+import expenseRoutes from './routes/expenseRoutes.js'
 import errorHandling from './middlewares/errorHandler.js'
 dotenv.config()
 
@@ -18,6 +19,7 @@ app.use(cors())
 
 //then define routes
 app.use("/api/user", userRoutes);
+app.use("/api/expenses", expenseRoutes);
 
 //error handling middleware
 app.use(errorHandling);
