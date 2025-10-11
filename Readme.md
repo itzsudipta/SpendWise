@@ -45,11 +45,30 @@ To set up the database for this project, follow these steps:
 ### Node.js Backend (Express.js)
 - ✅ **Node.js & Express.js Setup**: API setup with database connection successfully established
 - ✅ **User Routes**: user_data table routes successfully initialized and API endpoints working smoothly
-- ⏳ **Other Schema Routes**: Routes for all other database schemas currently under development
+- ✅ **Expense Routes**: Full CRUD operations for expense table implemented with specialized queries
+- ✅ **Budget Routes**: Complete budget management with spending analysis and tracking
+- ✅ **Category Routes**: Category management with expense reassignment and dependency checking
+- ✅ **All Schema Routes**: All database schema routes successfully implemented and functional
 
 ### Database (PostgreSQL)
 - ✅ **Database Schema**: Successfully initialized and ready
 - ✅ **Database Connection**: Established for Node.js backend implementations
 - ✅ **User Table Operations**: Full CRUD operations for user_data table implemented and functional
+- ✅ **Expense Table Operations**: Complete expense tracking with category and user relationships
+- ✅ **Budget Table Operations**: Budget management with monthly tracking and spending summaries
+- ✅ **Category Table Operations**: Category management with expense counting and analytics
 
-**⚡ Stay tuned for further update and step-by-step updates according developments.**
+### API Endpoints
+- ✅ **User Management**: Create, read, update, delete users
+- ✅ **Expense Tracking**: Track expenses with categories, dates, and descriptions
+- ✅ **Budget Planning**: Set monthly budgets and monitor spending
+- ✅ **Category Organization**: Manage expense categories with reassignment capabilities
+- ✅ **Analytics Queries**: Get spending summaries, category statistics, and budget insights
+
+## 🤖 Machine Learning Integration
+
+**⚡ Machine learning features are in the planning phase and will be integrated in future updates.**
+
+---
+
+**⚡ Stay tuned for further updates and step-by-step developments.**
