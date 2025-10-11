@@ -7,6 +7,7 @@ import pool from "./config/db.js"
 import userRoutes from './routes/userRoutes.js'
 import expenseRoutes from './routes/expenseRoutes.js'
 import budgetRoutes from './routes/budgetRoutes.js'
+import categoryRoutes from './routes/categoryRoutes.js'
 import errorHandling from './middlewares/errorHandler.js'
 dotenv.config()
 
@@ -22,6 +23,7 @@ app.use(cors())
 app.use("/api/user", userRoutes);
 app.use("/api/expenses", expenseRoutes);
 app.use("/api/budgets", budgetRoutes);
+app.use("/api/categories", categoryRoutes);
 
 //error handling middleware
 app.use(errorHandling);
