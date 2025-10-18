@@ -19,3 +19,17 @@ def get_db():
 def read_expenses(db: Session = Depends(get_db)):
     expenses = db.query(Expense).all()
     return expenses
+
+@app.get("/budgets")
+def read_expenses(db: Session = Depends(get_db)):
+    expenses = db.query(Budget).all()
+    return expenses
+@app.get("/user")
+def read_expenses(db: Session = Depends(get_db)):
+    expenses = db.query(UserData).all()
+    return expenses
+@app.get("/categories")
+def read_expenses(db: Session = Depends(get_db)):
+    expenses = db.query(Category).all()
+    return expenses
+
