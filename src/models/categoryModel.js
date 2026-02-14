@@ -30,8 +30,6 @@ export const updateCategoryService = async (cy_id, user_id, cy_name) => {
     return result.rows[0];
 }
 
-// Delete category
-// Delete category
 export const deleteCategoryService = async (cy_id) => {
     // First check if category has any expenses
     const expenseCheck = await pool.query(

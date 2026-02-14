@@ -120,8 +120,6 @@ export const updateCategory = async (req, res, next) => {
     }
 };
 
-// Delete category
-// Delete category
 export const deleteCategory = async (req, res, next) => {
     const { cy_id } = req.params;
 
@@ -131,17 +129,14 @@ export const deleteCategory = async (req, res, next) => {
     }
 
     try {
-        // Attempt to delete the category
         const deletedCategory = await deleteCategoryService(Number(cy_id));
 
         if (!deletedCategory) {
             return handleResponse(res, 404, "Category not found");
         }
 
-        // Successful deletion (PostgreSQL will cascade delete linked expenses)
         handleResponse(res, 200, "Category deleted successfully", deletedCategory);
     } catch (err) {
-        // No need to handle "Cannot delete category" manually anymore
         next(err);
     }
 };

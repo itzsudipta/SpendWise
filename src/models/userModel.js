@@ -24,3 +24,11 @@ export const deleteUserService = async (id) => {
     const result = await pool.query("DELETE FROM user_data WHERE user_id = $1 RETURNING *", [id]);
     return result.rows[0];
 }
+
+export const updateUserBankBalanceService = async (id, bank_opening_balance) => {
+    const result = await pool.query(
+        "UPDATE user_data SET bank_opening_balance = $1 WHERE user_id = $2 RETURNING *",
+        [bank_opening_balance, id]
+    );
+    return result.rows[0];
+}

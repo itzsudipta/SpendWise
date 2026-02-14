@@ -12,16 +12,16 @@ import {
 
 const router = express.Router();
 
-// Basic CRUD routes
-router.get("/", getAllExpenses);                    
-router.get("/:id", getExpenseById);                 
-router.post("/", createExpense);                    
-router.put("/:id", updateExpense);                 
-router.delete("/:id", deleteExpense);               
-
 // Additional specialized routes
-router.get("/user/:user_id", getExpensesByUserId);  
-router.get("/category/:cy_id", getExpensesByCategory); 
-router.get("/details/all", getExpensesWithDetails); 
+router.get("/user/:user_id", getExpensesByUserId);
+router.get("/category/:cy_id", getExpensesByCategory);
+router.get("/details/all", getExpensesWithDetails);
+
+// Basic CRUD routes
+router.get("/", getAllExpenses);
+router.get("/:id", getExpenseById);
+router.post("/", createExpense);
+router.put("/:id", updateExpense);
+router.delete("/:id", deleteExpense);
 
 export default router;

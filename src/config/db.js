@@ -3,18 +3,26 @@ import dotenv from 'dotenv'
 
 const { Pool } = pkg
 dotenv.config() 
-console.log("DB_USER:", process.env.DB_USER);
-console.log("DB_HOST:", process.env.DB_HOST);
-const pool = new Pool({
-    user: process.env.DB_USER,
-    host: process.env.DB_HOST,
-    database: process.env.DATABASE,
-    password: process.env.DB_PASSWORD,
-    port: process.env.DBPORT,
-})
+
+const pool = process.env.DATABASE_URL
+    ? new Pool({
+        connectionString: process.env.DATABASE_URL,
+        ssl: { rejectUnauthorized: false },
+    })
+    : new Pool({
+        user: process.env.DB_USER,
+        host: process.env.DB_HOST,
+        database: process.env.DB_NAME || process.env.DATABASE,
+        password: process.env.DB_PASSWORD,
+        port: Number(process.env.DB_PORT || process.env.DBPORT || 5432),
+    })
 
 pool.on('connect', () => {
     console.log('connection pool established with database');
+});
+
+pool.on('error', (err) => {
+    console.error('Unexpected database pool error:', err.message);
 });
 
 export default pool;

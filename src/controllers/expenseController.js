@@ -1,7 +1,7 @@
 import {
     getAllExpensesService,
     getExpenseByIdService,
-    createExpenseService,
+    createTransactionService,
     updateExpenseService,
     deleteExpenseService,
     getExpensesByUserIdService,
@@ -48,7 +48,7 @@ export const getExpenseById = async (req, res, next) => {
 
 // Create new expense
 export const createExpense = async (req, res, next) => {
-    const { user_id, cy_id, ex_amount, ex_desc, ex_data } = req.body;
+    const { user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type } = req.body;
 
     // Validate required fields
     if (!user_id || !cy_id || !ex_amount) {
@@ -64,13 +64,19 @@ export const createExpense = async (req, res, next) => {
         return handleResponse(res, 400, "ex_amount must be greater than 0");
     }
 
+    const txType = (ex_type || 'expense').toLowerCase();
+    if (!['expense', 'income'].includes(txType)) {
+        return handleResponse(res, 400, "ex_type must be 'expense' or 'income'");
+    }
+
     try {
-        const newExpense = await createExpenseService(
+        const newExpense = await createTransactionService(
             Number(user_id),
             Number(cy_id),
             Number(ex_amount),
             ex_desc || null,
-            ex_data || null
+            ex_data || null,
+            txType
         );
         handleResponse(res, 201, "Expense created successfully", newExpense);
     } catch (err) {
@@ -81,7 +87,7 @@ export const createExpense = async (req, res, next) => {
 // Update expense
 export const updateExpense = async (req, res, next) => {
     const { id } = req.params;
-    const { user_id, cy_id, ex_amount, ex_desc, ex_data } = req.body;
+    const { user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type } = req.body;
 
     // Validate ID
     if (isNaN(id)) {
@@ -102,6 +108,11 @@ export const updateExpense = async (req, res, next) => {
         return handleResponse(res, 400, "ex_amount must be greater than 0");
     }
 
+    const txType = (ex_type || 'expense').toLowerCase();
+    if (!['expense', 'income'].includes(txType)) {
+        return handleResponse(res, 400, "ex_type must be 'expense' or 'income'");
+    }
+
     try {
         const updatedExpense = await updateExpenseService(
             Number(id),
@@ -109,7 +120,8 @@ export const updateExpense = async (req, res, next) => {
             Number(cy_id),
             Number(ex_amount),
             ex_desc || null,
-            ex_data || null
+            ex_data || null,
+            txType
         );
         if (!updatedExpense) return handleResponse(res, 404, "Expense not found");
         handleResponse(res, 200, "Expense updated successfully", updatedExpense);

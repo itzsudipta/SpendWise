@@ -60,7 +60,7 @@ export const getBudgetWithSpendingService = async (user_id, b_mnth) => {
             (b.limit_amount - COALESCE(SUM(e.ex_amount), 0)) as remaining_amount
         FROM budget b
         LEFT JOIN expense e ON b.user_id = e.user_id 
-            AND DATE_TRUNC('month', e.ex_data) = DATE_TRUNC('month', b.b_mnth::date)
+            AND TO_CHAR(e.ex_data, 'YYYY-MM') = b.b_mnth
         WHERE b.user_id = $1 AND b.b_mnth = $2
         GROUP BY b.b_id, b.user_id, b.b_mnth, b.limit_amount
     `, [user_id, b_mnth]);

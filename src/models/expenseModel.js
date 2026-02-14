@@ -13,16 +13,24 @@ export const getExpenseByIdService = async (id) => {
 
 export const createExpenseService = async (user_id, cy_id, ex_amount, ex_desc, ex_data) => {
     const result = await pool.query(
-        "INSERT INTO expense (user_id, cy_id, ex_amount, ex_desc, ex_data) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-        [user_id, cy_id, ex_amount, ex_desc, ex_data]
+        "INSERT INTO expense (user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+        [user_id, cy_id, ex_amount, ex_desc, ex_data, 'expense']
     );
     return result.rows[0];
 }
 
-export const updateExpenseService = async (id, user_id, cy_id, ex_amount, ex_desc, ex_data) => {
+export const createTransactionService = async (user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type) => {
     const result = await pool.query(
-        "UPDATE expense SET user_id = $1, cy_id = $2, ex_amount = $3, ex_desc = $4, ex_data = $5 WHERE ex_id = $6 RETURNING *",
-        [user_id, cy_id, ex_amount, ex_desc, ex_data, id]
+        "INSERT INTO expense (user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+        [user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type]
+    );
+    return result.rows[0];
+}
+
+export const updateExpenseService = async (id, user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type = 'expense') => {
+    const result = await pool.query(
+        "UPDATE expense SET user_id = $1, cy_id = $2, ex_amount = $3, ex_desc = $4, ex_data = $5, ex_type = $6 WHERE ex_id = $7 RETURNING *",
+        [user_id, cy_id, ex_amount, ex_desc, ex_data, ex_type, id]
     );
     return result.rows[0];
 }
@@ -47,9 +55,12 @@ export const getExpensesWithDetailsService = async () => {
     const result = await pool.query(`
         SELECT 
             e.ex_id,
+            e.user_id,
+            e.cy_id,
             e.ex_amount,
             e.ex_desc,
             e.ex_data,
+            e.ex_type,
             e.created_at,
             u.user_name,
             u.user_email,
