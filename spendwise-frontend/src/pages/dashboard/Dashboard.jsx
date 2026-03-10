@@ -109,6 +109,10 @@ export default function Dashboard() {
       .filter((budget) => budget.b_mnth === currentMonth)
       .reduce((sum, budget) => sum + Number(budget.limit_amount || 0), 0);
   }, [budgets, currentMonth]);
+  const hasMonthlyBudget = useMemo(
+    () => budgets.some((budget) => budget.b_mnth === currentMonth),
+    [budgets, currentMonth]
+  );
 
   const remaining = useMemo(() => monthlyBudget - totalSpent, [monthlyBudget, totalSpent]);
 
@@ -197,7 +201,11 @@ export default function Dashboard() {
               Save
             </button>
           </div>
-          <p className="mt-1 text-xs text-gray-500">{balanceStatus || `Remaining this month: ${formatCurrency(remaining)}`}</p>
+          <p className="mt-1 text-xs text-gray-500">
+            {balanceStatus || (hasMonthlyBudget
+              ? `Remaining this month: ${formatCurrency(remaining)}`
+              : 'No budget set for this month')}
+          </p>
         </Card>
       </div>
 
