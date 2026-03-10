@@ -26,9 +26,14 @@ const runMonthEndAutoReports = async (month) => {
     }
   }
 
-  const nextMonth = getNextMonth(month);
-  const copiedCount = await carryForwardBudgetsToMonth(month, nextMonth);
-  console.log(`[auto-report] carried forward ${copiedCount} budget(s) from ${month} to ${nextMonth}`);
+  const carryForwardEnabled = process.env.AUTO_REPORTS_CARRY_FORWARD === 'true';
+  if (carryForwardEnabled) {
+    const nextMonth = getNextMonth(month);
+    const copiedCount = await carryForwardBudgetsToMonth(month, nextMonth);
+    console.log(`[auto-report] carried forward ${copiedCount} budget(s) from ${month} to ${nextMonth}`);
+  } else {
+    console.log('[auto-report] carry-forward disabled via AUTO_REPORTS_CARRY_FORWARD=false');
+  }
 };
 
 export const startAutoReportScheduler = () => {
