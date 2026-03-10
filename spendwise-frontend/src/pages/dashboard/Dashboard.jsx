@@ -23,6 +23,7 @@ export default function Dashboard() {
   const [budgets, setBudgets] = useState([]);
   const [openingBalance, setOpeningBalance] = useState(0);
   const [openingBalanceInput, setOpeningBalanceInput] = useState('');
+  const [isEditingOpeningBalance, setIsEditingOpeningBalance] = useState(false);
   const [balanceStatus, setBalanceStatus] = useState('');
   const [isMobile, setIsMobile] = useState(window.innerWidth < 768);
   const { user } = useAuth();
@@ -63,7 +64,9 @@ export default function Dashboard() {
       if (userRes.status === 'fulfilled') {
         const opening = Number(userRes.value?.data?.bank_opening_balance || 0);
         setOpeningBalance(opening);
-        setOpeningBalanceInput(String(opening));
+        if (!isEditingOpeningBalance) {
+          setOpeningBalanceInput(String(opening));
+        }
       } else {
         console.error('Dashboard fetch failed: user', userRes.reason);
       }
@@ -81,7 +84,7 @@ export default function Dashboard() {
       mounted = false;
       clearInterval(id);
     };
-  }, [currentUserId]);
+  }, [currentUserId, isEditingOpeningBalance]);
 
   const userMonthExpenses = useMemo(
     () =>
@@ -186,6 +189,8 @@ export default function Dashboard() {
               step="0.01"
               value={openingBalanceInput}
               onChange={(e) => setOpeningBalanceInput(e.target.value)}
+              onFocus={() => setIsEditingOpeningBalance(true)}
+              onBlur={() => setIsEditingOpeningBalance(false)}
               placeholder="Opening Bank Balance"
             />
             <button className="rounded-lg bg-brand px-3 py-1 text-sm font-semibold text-white" onClick={saveOpeningBalance} type="button">
