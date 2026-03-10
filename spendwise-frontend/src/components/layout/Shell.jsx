@@ -62,12 +62,20 @@ export default function Shell({ children, activeTab }) {
       </aside>
 
       <main className="flex-1 flex flex-col min-w-0">
-        <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-8 sticky top-0 z-10">
+        <header className="h-20 bg-white border-b border-gray-100 flex items-center justify-between px-4 md:px-8 sticky top-0 z-10">
           <h2 className="text-lg font-bold text-gray-800 capitalize">{activeTab}</h2>
           <div className="flex items-center gap-4">
             <div className="flex h-10 w-10 items-center justify-center rounded-full border-2 border-white bg-brand text-sm font-bold text-white shadow-sm">
               {getInitials()}
             </div>
+            <button
+              className="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded-full border border-gray-200 text-gray-500 hover:bg-gray-50"
+              onClick={handleLogout}
+              type="button"
+              aria-label="Logout"
+            >
+              <LogOut size={18} />
+            </button>
           </div>
         </header>
         <div className="p-8 pb-24 lg:pb-8 max-w-7xl mx-auto w-full">{children}</div>
@@ -77,6 +85,9 @@ export default function Shell({ children, activeTab }) {
         <Link to="/"><LayoutDashboard className="text-brand" /></Link>
         <Link to="/expenses"><Plus className="text-gray-400" /></Link>
         <Link to="/budgets"><PieChart className="text-gray-400" /></Link>
+        <button className="text-gray-400" onClick={handleLogout} type="button" aria-label="Logout">
+          <LogOut />
+        </button>
       </nav>
     </div>
   );
