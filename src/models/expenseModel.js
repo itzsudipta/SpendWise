@@ -1,9 +1,9 @@
 import pool from "../config/db.js";
 
-// Get all expenses
+
 export const getAllExpensesService = async () => {
     const result = await pool.query("SELECT * FROM expense");
-    return result.rows; // Should return all rows, not just the first one
+    return result.rows; 
 }
 
 export const getExpenseByIdService = async (id) => {
@@ -40,7 +40,7 @@ export const deleteExpenseService = async (id) => {
     return result.rows[0];
 }
 
-// Additional useful services for expenses
+
 export const getExpensesByUserIdService = async (user_id) => {
     const result = await pool.query("SELECT * FROM expense WHERE user_id = $1 ORDER BY ex_data DESC", [user_id]);
     return result.rows;

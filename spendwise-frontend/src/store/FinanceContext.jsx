@@ -32,23 +32,20 @@ export default function FinanceProvider({ children }) {
     } catch {
       // ignore cleanup errors
     }
-
     try {
-      const raw = getCookieValue(COOKIE_KEY);
-      return raw ? JSON.parse(raw) : null;
+      clearCookieValue(COOKIE_KEY);
     } catch {
-      return null;
+      // ignore cleanup errors
     }
+    return null;
   });
 
   const login = (nextUser) => {
     setUser(nextUser);
-    setCookieValue(COOKIE_KEY, JSON.stringify(nextUser));
   };
 
   const logout = () => {
     setUser(null);
-    clearCookieValue(COOKIE_KEY);
   };
 
   const value = useMemo(

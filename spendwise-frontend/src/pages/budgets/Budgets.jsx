@@ -5,9 +5,9 @@ import {
   createBudget,
   deleteBudget,
   getBudgetsByUser,
-  getBudgetSummary,
   updateBudget,
 } from '../../api/budgetService';
+import { getExpenseDetails } from '../../api/expenseService';
 import { useAuth } from '../../hooks/useAuth';
 import {
   downloadAutoMonthlyReport,
@@ -22,6 +22,8 @@ const getLocalMonth = () => {
 };
 
 const isCompletedMonth = (month) => month < getLocalMonth();
+const DEFAULT_TX_TYPE = 'expense';
+const isExpenseTx = (tx) => (tx.ex_type || DEFAULT_TX_TYPE) !== 'income';
 
 export default function Budgets() {
   const [items, setItems] = useState([]);
@@ -42,18 +44,26 @@ export default function Budgets() {
 
   const load = async () => {
     try {
-      const list = await getBudgetsByUser(currentUserId);
-      const rows = list?.data || [];
-      const summaries = await Promise.all(
-        rows.map(async (row) => {
-          try {
-            const summary = await getBudgetSummary(row.user_id, row.b_mnth);
-            return { ...row, ...(summary?.data || {}) };
-          } catch {
-            return { ...row, spent_amount: 0, remaining_amount: row.limit_amount };
-          }
-        })
-      );
+      const [budgetRes, expenseRes] = await Promise.all([getBudgetsByUser(currentUserId), getExpenseDetails()]);
+      const rows = budgetRes?.data || [];
+      const expenses = expenseRes?.data || [];
+      const summaries = rows.map((row) => {
+        const spentAmount = expenses
+          .filter(
+            (tx) =>
+              Number(tx.user_id) === Number(row.user_id) &&
+              String(tx.ex_data || '').startsWith(String(row.b_mnth || '')) &&
+              isExpenseTx(tx)
+          )
+          .reduce((sum, tx) => sum + Number(tx.ex_amount || 0), 0);
+
+        const limitAmount = Number(row.limit_amount || 0);
+        return {
+          ...row,
+          spent_amount: spentAmount,
+          remaining_amount: limitAmount - spentAmount,
+        };
+      });
       setItems(summaries);
 
       const allUserMonths = [...new Set(
