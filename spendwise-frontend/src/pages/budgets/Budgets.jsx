@@ -198,7 +198,25 @@ export default function Budgets() {
   };
 
   const userItems = items;
-  const allUserMonths = [...new Set(userItems.map((item) => item.b_mnth))].sort().reverse();
+  const monthKey = (value) => String(value || '').slice(0, 7);
+  const uniqueMonths = [...new Set(userItems.map((item) => monthKey(item.b_mnth)).filter(Boolean))].sort();
+  const startMonth = uniqueMonths[0] || currentMonth;
+  const allUserMonths = [];
+  if (startMonth && currentMonth && startMonth <= currentMonth) {
+    const [startYear, startMon] = startMonth.split('-').map(Number);
+    const [endYear, endMon] = currentMonth.split('-').map(Number);
+    let y = startYear;
+    let m = startMon;
+    while (y < endYear || (y === endYear && m <= endMon)) {
+      allUserMonths.push(`${y}-${String(m).padStart(2, '0')}`);
+      m += 1;
+      if (m > 12) {
+        m = 1;
+        y += 1;
+      }
+    }
+    allUserMonths.reverse();
+  }
   const currentMonthItems = userItems.filter((item) => item.b_mnth === currentMonth);
   const hasAnyBudget = userItems.length > 0;
 
